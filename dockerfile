@@ -13,6 +13,9 @@ RUN npm install
 # 复制项目文件
 COPY . .
 
+# 增加 Node.js 内存限制
+ENV NODE_OPTIONS="--max-old-space-size=2048"
+
 # 构建项目
 RUN npm run build
 
