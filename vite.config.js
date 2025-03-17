@@ -22,6 +22,7 @@ export default defineConfig({
     }
   },
   server: {
+    port: 3001, // 开发服务器端口
     proxy: {
       '/baidu': {
         target: 'https://openapi.baidu.com/',
@@ -39,5 +40,8 @@ export default defineConfig({
         rewrite: (path) => path.replace(/^\/ai/, ''),
       },
     },
+  },
+  preview: {
+    port: 3001, // 预览服务器端口
   },
 })

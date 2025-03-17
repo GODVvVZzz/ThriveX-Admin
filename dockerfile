@@ -1,17 +1,19 @@
-# 阶段 1：构建 Vite 项目
-FROM node:20-alpine AS builder
-WORKDIR /app
-COPY package.json package-lock.json ./
-RUN npm install --frozen-lockfile
-COPY . .
-ENV NODE_OPTIONS="--max-old-space-size=4096"
-RUN npm run build
+# 使用 Node.js 作为基础镜像
+FROM node:20-alpine
 
-# 阶段 2：使用 Nginx 运行
-FROM nginx:alpine
-WORKDIR /usr/share/nginx/html
-COPY --from=builder /app/dist .
-COPY nginx.conf /etc/nginx/nginx.conf
+# 设置工作目录
+WORKDIR /app
+
+# 复制项目文件
+COPY . .
+
+# 安装依赖
+RUN npm install --frozen-lockfile
+
+# 暴露 3000 端口
 EXPOSE 3001
-CMD ["nginx", "-g", "daemon off;"]
+
+# 运行 Vite 服务器
+CMD ["npm", "run", "preview"]
+
 
