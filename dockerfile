@@ -1,19 +1,25 @@
 # 使用 Node.js 作为基础镜像
-FROM node:20-alpine
+FROM node:16
 
 # 设置工作目录
 WORKDIR /app
 
+# 复制 package.json 和 package-lock.json
+COPY package*.json ./
+
+# 安装依赖
+RUN npm install
+
 # 复制项目文件
 COPY . .
 
-# 安装依赖
-RUN npm install --frozen-lockfile
+# 构建项目
+RUN npm run build
 
-# 暴露 3000 端口
+# 暴露 3001 端口
 EXPOSE 3001
 
-# 运行 Vite 服务器
+# 运行 Vite 预览服务器
 CMD ["npm", "run", "preview"]
 
 
