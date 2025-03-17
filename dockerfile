@@ -23,6 +23,6 @@ RUN npm run build
 EXPOSE 3001
 
 # 运行 Vite 预览服务器
-CMD ["npm", "run", "preview"]
+CMD ["npm", "run", "preview", "--", "--host", "0.0.0.0"]
 
 
